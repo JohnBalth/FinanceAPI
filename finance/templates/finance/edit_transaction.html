@@ -1,0 +1,223 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar transação | FinanceAPI</title>
+
+    <style>
+        :root {
+            --primary: #2583e9;
+            --primary-dark: #1765c0;
+            --background: #f3f8fe;
+            --text: #172b4d;
+            --muted: #71819a;
+            --border: #e1ebf7;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 32px 16px;
+            background: var(--background);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 24px;
+        }
+
+        .brand {
+            color: var(--primary-dark);
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 12px 0 8px;
+            font-size: clamp(25px, 5vw, 32px);
+        }
+
+        .subtitle {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .card {
+            padding: 28px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 8px 28px rgba(23, 43, 77, 0.05);
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        input,
+        select {
+            display: block;
+            width: 100%;
+            min-height: 46px;
+            padding: 11px 12px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #fff;
+            color: var(--text);
+            font: inherit;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 131, 233, 0.12);
+        }
+
+        .error {
+            margin-top: 7px;
+            color: #c62840;
+            font-size: 13px;
+        }
+
+        .error-list {
+            margin-bottom: 18px;
+            padding: 12px 16px;
+            border: 1px solid #f3c5cc;
+            border-radius: 9px;
+            background: #fff0f0;
+            color: #a52135;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .button {
+            display: inline-flex;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+            padding: 11px 18px;
+            border: 0;
+            border-radius: 9px;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .button-primary {
+            flex: 1;
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .button-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .button-secondary {
+            background: #edf5ff;
+            color: var(--primary-dark);
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 22px 12px;
+            }
+
+            .card {
+                padding: 20px 16px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <header class="header">
+            <div class="brand">FinanceAPI</div>
+            <h1>Editar transação</h1>
+            <p class="subtitle">
+                Atualize os dados abaixo e salve suas alterações.
+            </p>
+        </header>
+
+        <section class="card">
+            <form method="post">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="error-list">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                {% for field in form %}
+                    <div class="field">
+                        <label for="{{ field.id_for_label }}">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field }}
+
+                        {% if field.errors %}
+                            <div class="error">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="actions">
+                    <button class="button button-primary" type="submit">
+                        Salvar alterações
+                    </button>
+
+                    <a class="button button-secondary"
+                       href="/api/dashboard/">
+                        Cancelar
+                    </a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

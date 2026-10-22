@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Criar conta | FinanceAPI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            font-family: Arial, sans-serif;
+            background: #f3f8fe;
+            color: #1f2937;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 430px;
+            padding: 32px;
+            background: #ffffff;
+            border: 1px solid #e1eaf5;
+            border-radius: 16px;
+            box-shadow: 0 12px 35px rgba(37, 131, 233, 0.10);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 26px;
+            color: #1765c0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .logo-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #e7f1ff;
+            font-size: 23px;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: 27px;
+            color: #172b4d;
+        }
+
+        .subtitle {
+            margin: 0 0 24px;
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: #ffffff;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: 2px solid #2583e9;
+            outline-offset: 1px;
+            border-color: #2583e9;
+        }
+
+        .helptext {
+            display: block;
+            margin-top: 8px;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .helptext ul {
+            padding-left: 18px;
+        }
+
+        .errorlist {
+            margin: 8px 0;
+            padding-left: 20px;
+            color: #c0394b;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .submit-button {
+            width: 100%;
+            margin-top: 8px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #2583e9;
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .submit-button:hover {
+            background: #1765c0;
+        }
+
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        a {
+            color: #1765c0;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="register-card">
+
+        <div class="logo">
+            <div class="logo-icon">📊</div>
+            <span>FinanceAPI</span>
+        </div>
+
+        <h1>Criar sua conta</h1>
+
+        <p class="subtitle">
+            Organize suas receitas e despesas em um só lugar.
+            Crie sua conta para começar.
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            <div class="field">
+                <label for="{{ form.username.id_for_label }}">
+                    Nome de usuário
+                </label>
+
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+
+            <div class="field">
+                <label for="{{ form.password1.id_for_label }}">
+                    Senha
+                </label>
+
+                {{ form.password1 }}
+                {{ form.password1.errors }}
+
+                {% if form.password1.help_text %}
+                    <div class="helptext">
+                        {{ form.password1.help_text|safe }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="field">
+                <label for="{{ form.password2.id_for_label }}">
+                    Confirme sua senha
+                </label>
+
+                {{ form.password2 }}
+                {{ form.password2.errors }}
+            </div>
+
+            <button type="submit" class="submit-button">
+                Criar minha conta
+            </button>
+        </form>
+
+        <div class="footer">
+            Já tem uma conta?
+            <a href="{% url 'login' %}">Entrar</a>
+        </div>
+
+    </main>
+</body>
+</html>
