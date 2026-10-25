@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 # Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -93,13 +94,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
+
 # Banco de dados SQLite
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.environ.get(
+            'DJANGO_DB_PATH',
+            str(BASE_DIR / 'db.sqlite3')
+        ),
     }
 }
+
 
 
 # Validação de senhas
@@ -143,7 +149,7 @@ USE_TZ = True
 
 # Arquivos estáticos
 STATIC_URL = 'static/'
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # E-mail no ambiente de desenvolvimento
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
