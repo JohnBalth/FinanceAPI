@@ -438,6 +438,7 @@ def dashboard(request):
             float(item["expenses"] or Decimal("0.00"))
         )
 
+    
     # ======================================================
     # GRÁFICO 2: DESPESAS POR CATEGORIA
     # TODO O HISTÓRICO DO USUÁRIO
@@ -463,27 +464,22 @@ def dashboard(request):
     for item in category_results:
 
         category_chart_data["labels"].append(
-            item["category"]
+            item["category"] or "Sem categoria"
         )
 
         category_chart_data["values"].append(
             float(item["total"] or Decimal("0.00"))
         )
 
+
     # ======================================================
     # BUSCA POR DESCRIÇÃO OU CATEGORIA
     # ======================================================
 
-    search_query = request.GET.get(
-        "q",
-        ""
-    ).strip()
+    search_query = request.GET.get("q", "").strip()
 
     # Filtro por tipo de transação
-    selected_type = request.GET.get(
-        "tipo",
-        ""
-    ).strip()
+    selected_type = request.GET.get("tipo", "").strip()
 
     transactions = period_transactions
 
@@ -511,20 +507,13 @@ def dashboard(request):
         "income": income,
         "expenses": expenses,
         "balance": balance,
-
         "transactions": transactions[:10],
-
         "search_query": search_query,
         "selected_type": selected_type,
-
         "selected_month": selected_month,
         "selected_year": selected_year,
         "available_years": available_years,
-
-        # Dados antigos
         "chart_data": chart_data,
-
-        # Novos gráficos
         "monthly_chart_data": monthly_chart_data,
         "category_chart_data": category_chart_data,
     }
