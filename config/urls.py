@@ -9,7 +9,7 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path("", RedirectView.as_view(url="/api/dashboard/", permanent=False)),
-    
+
     path("admin/", admin.site.urls),
 
     # Rotas da FinanceAPI
@@ -27,7 +27,7 @@ urlpatterns = [
     # Logout pelo site
     path(
         "logout/",
-        auth_views.LogoutView.as_view(),
+        auth_views.LogoutView.as_view(next_page="login"),
         name="logout",
     ),
 
