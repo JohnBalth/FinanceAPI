@@ -5,8 +5,11 @@ from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularSwaggerView,
 )
+from django.views.generic import RedirectView
 
 urlpatterns = [
+    path("", RedirectView.as_view(url="/api/dashboard/", permanent=False)),
+    
     path("admin/", admin.site.urls),
 
     # Rotas da FinanceAPI
