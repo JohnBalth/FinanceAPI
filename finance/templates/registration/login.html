@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | FinanceAPI</title>
+    <title>MeuDinDin | Acesse sua conta</title>
 
     <style>
         * {
@@ -20,101 +20,281 @@
             background: #f3f8fe;
             font-family: Arial, sans-serif;
             color: #1f2937;
+            padding: 20px;
         }
 
         .login-card {
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             padding: 32px;
             background: white;
-            border-radius: 16px;
+            border-radius: 18px;
             box-shadow: 0 8px 30px rgba(37, 131, 233, 0.12);
         }
 
-        h1 {
-            margin-top: 0;
-            color: #2583e9;
+        .brand {
             text-align: center;
+            margin-bottom: 25px;
         }
 
-        p {
-            text-align: center;
+        .brand h1 {
+            margin: 0;
+            color: #2583e9;
+            font-size: 30px;
+        }
+
+        .brand p {
             color: #64748b;
+            margin-top: 8px;
+        }
+
+        .tabs {
+            display: flex;
+            background: #edf5ff;
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            width: 50%;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            background: transparent;
+            color: #64748b;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background: #2583e9;
+            color: white;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        h2 {
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
             margin-top: 16px;
             font-weight: bold;
+            font-size: 14px;
         }
 
         input {
             width: 100%;
             padding: 12px;
-            margin-top: 6px;
+            margin-top: 7px;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
+            font-size: 15px;
         }
 
-        button {
+        input:focus {
+            outline: none;
+            border-color: #2583e9;
+            box-shadow: 0 0 0 3px rgba(37, 131, 233, 0.12);
+        }
+
+        .submit-btn {
             width: 100%;
-            padding: 12px;
-            margin-top: 24px;
+            padding: 13px;
+            margin-top: 25px;
             border: none;
             border-radius: 8px;
             background: #2583e9;
             color: white;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
         }
 
-        button:hover {
+        .submit-btn:hover {
             background: #1765c0;
         }
 
         .error {
             color: #d64b5d;
-            text-align: left;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+
+        .success-message {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            color: #047857;
+            padding: 13px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            margin-top: 22px;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
         }
     </style>
 </head>
 
 <body>
     <main class="login-card">
-        <h1>FinanceAPI</h1>
-        <p>Entre na sua conta para continuar.</p>
 
-        <form method="post">
-            {% csrf_token %}
+        <header class="brand">
+            <h1>MeuDinDin</h1>
+            <p>Organize seu dinheiro. Planeje seu futuro.</p>
+        </header>
 
-            {% if form.errors %}
-                <p class="error">
-                    Usuário ou senha inválidos. Tente novamente.
-                </p>
-            {% endif %}
+        {% if registration_pending %}
+            <div class="success-message">
+                Cadastro recebido com sucesso! Sua conta está aguardando
+                aprovação do administrador. Você poderá entrar assim que
+                sua conta for liberada.
+            </div>
+        {% endif %}
 
-            <label for="id_username">Nome de usuário</label>
-            <input
-                type="text"
-                name="username"
-                id="id_username"
-                autocomplete="username"
-                required
-            >
+        <div class="tabs">
+            <button type="button"
+                    class="tab {% if not register_form.errors %}active{% endif %}"
+                    id="login-tab"
+                    onclick="showForm('login')">
+                Entrar
+            </button>
 
-            <label for="id_password">Senha</label>
-            <input
-                type="password"
-                name="password"
-                id="id_password"
-                autocomplete="current-password"
-                required
-            >
+            <button type="button"
+                    class="tab {% if register_form.errors %}active{% endif %}"
+                    id="register-tab"
+                    onclick="showForm('register')">
+                Criar conta
+            </button>
+        </div>
 
-            <input type="hidden" name="next" value="{{ next }}">
+        <!-- LOGIN -->
+        <section id="login-section"
+                 class="form-section {% if not register_form.errors %}active{% endif %}">
 
-            <button type="submit">Entrar</button>
-        </form>
+            <h2>Bem-vindo de volta!</h2>
+            <p class="description">Entre na sua conta para continuar.</p>
+
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    <p class="error">
+                        Usuário ou senha inválidos. Verifique também se sua
+                        conta já foi aprovada pelo administrador.
+                    </p>
+                {% endif %}
+
+                <label for="id_username">Nome de usuário</label>
+                <input type="text" name="username"
+                       id="id_username"
+                       autocomplete="username" required>
+
+                <label for="id_password">Senha</label>
+                <input type="password" name="password"
+                       id="id_password"
+                       autocomplete="current-password" required>
+
+                <input type="hidden" name="next" value="{{ next }}">
+
+                <button type="submit" class="submit-btn">
+                    Entrar
+                </button>
+            </form>
+        </section>
+
+        <!-- CADASTRO -->
+        <section id="register-section"
+                 class="form-section {% if register_form.errors %}active{% endif %}">
+
+            <h2>Crie sua conta</h2>
+            <p class="description">
+                Cadastre-se gratuitamente para começar.
+            </p>
+
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+
+                {% if register_form.non_field_errors %}
+                    <div class="error">
+                        {{ register_form.non_field_errors }}
+                    </div>
+                {% endif %}
+
+                <label for="register_username">Nome de usuário</label>
+                <input type="text" name="username"
+                       id="register_username"
+                       autocomplete="username"
+                       value="{{ register_form.username.value|default:'' }}"
+                       required>
+
+                {% for error in register_form.username.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+
+                <label for="register_password1">Senha</label>
+                <input type="password" name="password1"
+                       id="register_password1"
+                       autocomplete="new-password" required>
+
+                {% for error in register_form.password1.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+
+                <label for="register_password2">Confirme sua senha</label>
+                <input type="password" name="password2"
+                       id="register_password2"
+                       autocomplete="new-password" required>
+
+                {% for error in register_form.password2.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+
+                <button type="submit" class="submit-btn">
+                    Criar minha conta
+                </button>
+            </form>
+        </section>
+
+        <footer class="footer">
+            MeuDinDin © 2026 — Controle financeiro pessoal
+        </footer>
+
     </main>
+
+    <script>
+        function showForm(type) {
+            const loginSection = document.getElementById("login-section");
+            const registerSection = document.getElementById("register-section");
+            const loginTab = document.getElementById("login-tab");
+            const registerTab = document.getElementById("register-tab");
+
+            loginSection.classList.toggle("active", type === "login");
+            registerSection.classList.toggle("active", type === "register");
+
+            loginTab.classList.toggle("active", type === "login");
+            registerTab.classList.toggle("active", type === "register");
+        }
+    </script>
 </body>
 </html>

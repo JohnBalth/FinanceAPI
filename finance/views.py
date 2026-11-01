@@ -449,7 +449,6 @@ def edit_transaction(request, pk):
 # CADASTRO DE USUÁRIOS
 # ==========================================================
 
-
 def register(request):
     if request.user.is_authenticated:
         return redirect("dashboard")
@@ -459,21 +458,24 @@ def register(request):
 
         if form.is_valid():
             user = form.save(commit=False)
-
-            # A conta começa bloqueada até a aprovação do administrador.
             user.is_active = False
             user.save()
 
             return render(
                 request,
-                "registration/register_pending.html",
-                {"username": user.username},
+                "registration/login.html",
+                {
+                    "register_form": UserCreationForm(),
+                    "registration_pending": True,
+                },
             )
     else:
         form = UserCreationForm()
 
     return render(
         request,
-        "registration/register.html",
-        {"form": form},
+        "registration/login.html",
+        {
+            "register_form": form,
+        },
     )
