@@ -431,7 +431,7 @@ def edit_transaction(request, pk):
 
         if form.is_valid():
             form.save()
-            return redirect("/api/dashboard/")
+            return redirect("dashboard")
     else:
         form = TransactionForm(instance=transaction)
 
