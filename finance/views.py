@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Sum
+from django.db.models.functions import TruncMonth
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404, redirect, render
@@ -294,15 +295,25 @@ def transaction_form(request):
 # DASHBOARD FINANCEIRO
 # ==========================================================
 
+# ==========================================================
+# DASHBOARD FINANCEIRO
+# ==========================================================
+
 @login_required
 def dashboard(request):
-    # Somente as transações do usuário autenticado
-    user_transactions = Transaction.objects.filter(user=request.user)
+
+    # Somente transações do usuário autenticado
+    user_transactions = Transaction.objects.filter(
+        user=request.user
+    )
 
     current_year = timezone.localdate().year
 
     selected_month = request.GET.get("mes", "").strip()
-    selected_year = request.GET.get("ano", str(current_year)).strip()
+    selected_year = request.GET.get(
+        "ano",
+        str(current_year)
+    ).strip()
 
     # Validar mês
     if selected_month.isdigit() and 1 <= int(selected_month) <= 12:
@@ -327,11 +338,19 @@ def dashboard(request):
             order="DESC",
         )
     }
+
     available_years.add(current_year)
     available_years.add(year_number)
-    available_years = sorted(available_years, reverse=True)
 
-    # Filtrar por ano e, opcionalmente, por mês
+    available_years = sorted(
+        available_years,
+        reverse=True
+    )
+
+    # ======================================================
+    # FILTRO DO PERÍODO PARA RESUMO E TRANSAÇÕES
+    # ======================================================
+
     period_transactions = user_transactions.filter(
         date__year=year_number
     )
@@ -341,7 +360,10 @@ def dashboard(request):
             date__month=month_number
         )
 
-    # Calcular receitas e despesas
+    # ======================================================
+    # TOTAL DE RECEITAS E DESPESAS DO PERÍODO SELECIONADO
+    # ======================================================
+
     totals = period_transactions.aggregate(
         income=Sum(
             "amount",
@@ -359,19 +381,109 @@ def dashboard(request):
 
     income = totals["income"] or Decimal("0.00")
     expenses = totals["expenses"] or Decimal("0.00")
+
     balance = income - expenses
 
-    # Dados utilizados pelo gráfico
+    # Mantém os dados anteriores para compatibilidade
     chart_data = {
         "income": float(income),
         "expenses": float(expenses),
     }
 
-    # Busca por descrição ou categoria
-    search_query = request.GET.get("q", "").strip()
+    # ======================================================
+    # GRÁFICO 1: RECEITAS X DESPESAS POR MÊS
+    # TODO O HISTÓRICO DO USUÁRIO
+    # ======================================================
+
+    monthly_results = (
+        user_transactions
+        .annotate(
+            month=TruncMonth("date")
+        )
+        .values("month")
+        .annotate(
+            income=Sum(
+                "amount",
+                filter=Q(
+                    transaction_type=Transaction.TransactionType.INCOME
+                ),
+            ),
+            expenses=Sum(
+                "amount",
+                filter=Q(
+                    transaction_type=Transaction.TransactionType.EXPENSE
+                ),
+            ),
+        )
+        .order_by("month")
+    )
+
+    monthly_chart_data = {
+        "labels": [],
+        "income": [],
+        "expenses": [],
+    }
+
+    for item in monthly_results:
+
+        monthly_chart_data["labels"].append(
+            item["month"].strftime("%m/%Y")
+        )
+
+        monthly_chart_data["income"].append(
+            float(item["income"] or Decimal("0.00"))
+        )
+
+        monthly_chart_data["expenses"].append(
+            float(item["expenses"] or Decimal("0.00"))
+        )
+
+    # ======================================================
+    # GRÁFICO 2: DESPESAS POR CATEGORIA
+    # TODO O HISTÓRICO DO USUÁRIO
+    # ======================================================
+
+    category_results = (
+        user_transactions
+        .filter(
+            transaction_type=Transaction.TransactionType.EXPENSE
+        )
+        .values("category")
+        .annotate(
+            total=Sum("amount")
+        )
+        .order_by("-total")
+    )
+
+    category_chart_data = {
+        "labels": [],
+        "values": [],
+    }
+
+    for item in category_results:
+
+        category_chart_data["labels"].append(
+            item["category"]
+        )
+
+        category_chart_data["values"].append(
+            float(item["total"] or Decimal("0.00"))
+        )
+
+    # ======================================================
+    # BUSCA POR DESCRIÇÃO OU CATEGORIA
+    # ======================================================
+
+    search_query = request.GET.get(
+        "q",
+        ""
+    ).strip()
 
     # Filtro por tipo de transação
-    selected_type = request.GET.get("tipo", "").strip()
+    selected_type = request.GET.get(
+        "tipo",
+        ""
+    ).strip()
 
     transactions = period_transactions
 
@@ -391,17 +503,30 @@ def dashboard(request):
     else:
         selected_type = ""
 
+    # ======================================================
+    # CONTEXTO DO DASHBOARD
+    # ======================================================
+
     context = {
         "income": income,
         "expenses": expenses,
         "balance": balance,
+
         "transactions": transactions[:10],
+
         "search_query": search_query,
         "selected_type": selected_type,
+
         "selected_month": selected_month,
         "selected_year": selected_year,
         "available_years": available_years,
+
+        # Dados antigos
         "chart_data": chart_data,
+
+        # Novos gráficos
+        "monthly_chart_data": monthly_chart_data,
+        "category_chart_data": category_chart_data,
     }
 
     return render(
@@ -409,7 +534,6 @@ def dashboard(request):
         "finance/dashboard.html",
         context,
     )
-
 
 # ==========================================================
 # EDITAR UMA TRANSAÇÃO PELO DASHBOARD
