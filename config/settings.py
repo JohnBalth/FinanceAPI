@@ -21,7 +21,8 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "")
 DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
 ALLOWED_HOSTS = os.environ.get(
-    "DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1"
+    "DJANGO_ALLOWED_HOSTS",
+    "localhost,127.0.0.1,meudindin-b259.onrender.com"
 ).split(",")
 
 
