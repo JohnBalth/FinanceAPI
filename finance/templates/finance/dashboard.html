@@ -184,6 +184,27 @@
             font-weight: 600;
         }
 
+        .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .logout-form {
+        margin: 0;
+    }
+
+    @media (max-width: 520px) {
+        .topbar-actions {
+            width: 100%;
+            flex-wrap: wrap;
+        }
+    }
+
+        
+
+                        
+
         .user-avatar {
             display: flex;
             align-items: center;
@@ -877,14 +898,25 @@
                 <p>Acompanhe suas receitas, despesas e saldo.</p>
             </div>
 
-            <div class="user-info">
-                <div class="user-avatar">
-                    <svg viewBox="0 0 24 24" class="icon icon-filled" aria-hidden="true">
-                        <use href="#icon-user"></use>
-                    </svg>
-                </div>
-                <span>{{ request.user.username }}</span>
-            </div>
+        <div class="topbar-actions">
+
+    <div class="user-info">
+        <div class="user-avatar">
+            <svg viewBox="0 0 24 24" class="icon icon-filled" aria-hidden="true">
+                <use href="#icon-user"></use>
+            </svg>
+        </div>
+        <span>{{ request.user.username }}</span>
+    </div>
+
+    <form method="POST" action="{% url 'logout' %}" class="logout-form">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">
+            Sair da conta
+        </button>
+    </form>
+
+</div>    
         </header>
 
         <!-- BUSCA E NOVA TRANSAÇÃO -->
