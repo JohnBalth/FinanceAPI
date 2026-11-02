@@ -1,124 +1,166 @@
- Meu DinDin — Sistema de Controle Financeiro
+Meu DinDin | Controle Financeiro Pessoal
 
 
 
-Aplicação web desenvolvida com Python e Django para gerenciamento de receitas e despesas pessoais, com autenticação de usuários, dashboard financeiro e armazenamento de dados em PostgreSQL.
+O Meu DinDin é uma aplicação web que desenvolvi para facilitar o controle de receitas e despesas pessoais.
 
 
 
-🔗 \*\*Acesse a aplicação:\*\* https://meudindin-b259.onrender.com/
+A ideia do projeto é oferecer uma ferramenta simples, na qual cada usuário possa acompanhar sua movimentação financeira em um só lugar, com acesso individual e dados separados por conta.
 
 
 
-\## 📸 Demonstração do sistema
+Acesse o sistema: https://meudindin-b259.onrender.com/
 
 
 
-\### Tela de login
+Conheça o sistema
 
-!\[Login](screenshots/01-login.png)
 
 
+Tela de login
 
-\### Cadastro de usuários
 
-!\[Cadastro](screenshots/02-cadastro.png)
 
 
 
-\### Dashboard financeiro
 
-!\[Dashboard 1](screenshots/03-dashboard1.png)
 
+Cadastro de usuários
 
 
-!\[Dashboard 2](screenshots/03-dashboard2.png)
 
 
 
-\### Histórico de transações
 
-!\[Transações](screenshots/04-transacoes.png)
 
+Dashboard financeiro
 
 
-\### Cadastro de transações
 
-!\[Nova transação](screenshots/05-nova-transacao.png)
 
 
 
-\## 🚀 Funcionalidades
 
 
 
-\- Cadastro e autenticação de usuários.
 
-\- Aprovação manual de novos cadastros.
 
-\- Dashboard para acompanhamento financeiro.
+Histórico de transações
 
-\- Registro de receitas e despesas.
 
-\- Organização de transações por categoria e data.
 
-\- Isolamento dos dados entre diferentes usuários.
 
-\- API REST para operações financeiras.
 
-\- Documentação da API com Swagger.
 
-\- Banco de dados PostgreSQL.
 
-\- Rotina de backup e procedimento de restauração testado.
+Cadastro de receitas e despesas
 
 
 
-\## 🛠️ Tecnologias
 
 
 
-\- Python
 
-\- Django
+O que o sistema faz
 
-\- Django REST Framework
 
-\- PostgreSQL
 
-\- HTML e CSS
+Permite criar uma conta e acessar o sistema com autenticação.
 
-\- Git e GitHub
 
-\- Render
 
+Mantém novos cadastros aguardando aprovação do administrador.
 
 
-\## 🔐 Segurança e integridade dos dados
 
+Organiza receitas e despesas em um painel financeiro.
 
 
-O sistema utiliza autenticação e controle de acesso por usuário. Cada conta visualiza somente suas próprias transações. Novos cadastros ficam inativos até aprovação administrativa.
 
+Permite registrar e consultar transações.
 
 
-Também foi implementada uma rotina de backup do banco de dados PostgreSQL, com teste de restauração em ambiente local separado.
 
+Organiza as movimentações por categoria e data.
 
 
-\## 👨‍💻 Desenvolvedor
 
+Garante que cada usuário tenha acesso somente aos próprios dados.
 
 
-\*\*Jonatas Balthazar Nascimento\*\*
 
+Disponibiliza uma API REST para operações financeiras.
 
 
-\- GitHub: https://github.com/JohnBalth
 
-\- LinkedIn: https://www.linkedin.com/in/jonatas-balthazar-120298202
+Conta com documentação da API por meio do Swagger.
 
 
 
-Projeto desenvolvido para demonstrar conhecimentos práticos em desenvolvimento web com Python, Django, APIs REST, bancos de dados e controle de versão.
+Tecnologias utilizadas
+
+
+
+Python e Django: desenvolvimento da aplicação e das regras de negócio.
+
+
+
+Django REST Framework: construção da API.
+
+
+
+PostgreSQL: armazenamento dos dados.
+
+
+
+HTML e CSS: estrutura e apresentação das páginas.
+
+
+
+Git e GitHub: versionamento e organização do código.
+
+
+
+Render: publicação da aplicação.
+
+
+
+Segurança e backup
+
+
+
+Um dos pontos que priorizei no desenvolvimento foi a separação dos dados entre usuários. Cada conta possui suas próprias transações, sem acesso às movimentações de outras pessoas.
+
+
+
+Também implementei uma rotina de backup do PostgreSQL. Além de automatizar a geração das cópias, realizei um teste de restauração em um banco local separado para verificar se os dados poderiam ser recuperados.
+
+
+
+Sobre o desenvolvimento
+
+
+
+Este projeto faz parte da minha evolução prática com Python e desenvolvimento web. Durante sua construção, trabalhei com autenticação, permissões, operações com banco de dados, criação de APIs e publicação de aplicações.
+
+
+
+Mais do que desenvolver as funcionalidades, o projeto também me permitiu lidar com questões importantes de um sistema em funcionamento, como isolamento de dados, manutenção e recuperação de informações.
+
+
+
+Desenvolvedor
+
+
+
+Jonatas Balthazar Nascimento
+
+
+
+GitHub: https://github.com/JohnBalth
+
+
+
+LinkedIn: https://www.linkedin.com/in/jonatas-balthazar-120298202
 
