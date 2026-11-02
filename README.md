@@ -1,4 +1,4 @@
-\# Meu DinDin — Sistema de Controle Financeiro
+ Meu DinDin — Sistema de Controle Financeiro
 
 
 
