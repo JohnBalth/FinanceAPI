@@ -24,3 +24,6 @@ media/
 # Editor e sistema
 .vscode/
 .DS_Store
+
+# Backups do banco de produção
+/backups/
