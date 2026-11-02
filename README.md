@@ -1,166 +1,182 @@
-Meu DinDin | Controle Financeiro Pessoal
+\# \*\*Meu DinDin | Controle Financeiro Pessoal\*\*
 
 
 
-O Meu DinDin é uma aplicação web que desenvolvi para facilitar o controle de receitas e despesas pessoais.
+Aplicação web que desenvolvi com Python e Django para facilitar o controle de receitas e despesas pessoais.
 
 
 
-A ideia do projeto é oferecer uma ferramenta simples, na qual cada usuário possa acompanhar sua movimentação financeira em um só lugar, com acesso individual e dados separados por conta.
+A proposta do Meu DinDin é oferecer uma ferramenta simples para organizar a movimentação financeira, acompanhar resultados em um dashboard e manter os dados de cada usuário separados.
 
 
 
-Acesse o sistema: https://meudindin-b259.onrender.com/
+\*\*Acesse o sistema:\*\* https://meudindin-b259.onrender.com/
 
 
 
-Conheça o sistema
+\---
 
 
 
-Tela de login
+\## \*\*📸 Conheça o sistema\*\*
 
 
 
+\### \*\*1. Tela de login\*\*
 
 
 
+!\[Tela de login](screenshots/01-login.png)
 
-Cadastro de usuários
 
 
+\### \*\*2. Cadastro de usuários\*\*
 
 
 
+!\[Cadastro de usuários](screenshots/02-cadastro.png)
 
 
-Dashboard financeiro
 
+\### \*\*3. Dashboard financeiro\*\*
 
 
 
+O painel apresenta informações sobre a movimentação financeira e permite acompanhar os resultados de forma visual.
 
 
 
+!\[Dashboard principal](screenshots/03-dashboard1.png)
 
 
 
+!\[Dashboard complementar](screenshots/03-dashboard2.png)
 
-Histórico de transações
 
 
+\### \*\*4. Histórico de transações\*\*
 
 
 
+!\[Histórico de transações](screenshots/04-transacoes.png)
 
 
-Cadastro de receitas e despesas
 
+\### \*\*5. Cadastro de receitas e despesas\*\*
 
 
 
+!\[Cadastro de transações](screenshots/05-nova-transacao.png)
 
 
 
-O que o sistema faz
+\---
 
 
 
-Permite criar uma conta e acessar o sistema com autenticação.
+\## \*\*🚀 Funcionalidades\*\*
 
 
 
-Mantém novos cadastros aguardando aprovação do administrador.
+\- Cadastro e autenticação de usuários.
 
+\- Aprovação manual de novos cadastros pelo administrador.
 
+\- Dashboard para acompanhamento financeiro.
 
-Organiza receitas e despesas em um painel financeiro.
+\- Registro de receitas e despesas.
 
+\- Consulta de movimentações por categoria e data.
 
+\- Separação dos dados financeiros entre diferentes usuários.
 
-Permite registrar e consultar transações.
+\- API REST para operações financeiras.
 
+\- Documentação da API com Swagger.
 
 
-Organiza as movimentações por categoria e data.
 
+\---
 
 
-Garante que cada usuário tenha acesso somente aos próprios dados.
 
+\## \*\*🛠️ Tecnologias utilizadas\*\*
 
 
-Disponibiliza uma API REST para operações financeiras.
 
+| Tecnologia | Aplicação no projeto |
 
+|---|---|
 
-Conta com documentação da API por meio do Swagger.
+| \*\*Python\*\* | Linguagem principal |
 
+| \*\*Django\*\* | Desenvolvimento backend |
 
+| \*\*Django REST Framework\*\* | Construção da API |
 
-Tecnologias utilizadas
+| \*\*PostgreSQL\*\* | Banco de dados |
 
+| \*\*HTML e CSS\*\* | Interface da aplicação |
 
+| \*\*Git e GitHub\*\* | Versionamento do código |
 
-Python e Django: desenvolvimento da aplicação e das regras de negócio.
+| \*\*Render\*\* | Hospedagem da aplicação |
 
 
 
-Django REST Framework: construção da API.
+\---
 
 
 
-PostgreSQL: armazenamento dos dados.
+\## \*\*🔐 Segurança e backup\*\*
 
 
 
-HTML e CSS: estrutura e apresentação das páginas.
+Um dos pontos que priorizei no desenvolvimento foi a separação dos dados entre os usuários. Cada conta possui suas próprias transações e não consegue visualizar as movimentações de outras contas.
 
 
 
-Git e GitHub: versionamento e organização do código.
+Também implementei uma rotina de backup do PostgreSQL. Além da geração automática das cópias, realizei um teste de restauração em um banco local separado para verificar se os dados poderiam ser recuperados.
 
 
 
-Render: publicação da aplicação.
+\---
 
 
 
-Segurança e backup
+\## \*\*💻 Sobre o desenvolvimento\*\*
 
 
 
-Um dos pontos que priorizei no desenvolvimento foi a separação dos dados entre usuários. Cada conta possui suas próprias transações, sem acesso às movimentações de outras pessoas.
+Este projeto faz parte da minha evolução prática com Python e desenvolvimento web.
 
 
 
-Também implementei uma rotina de backup do PostgreSQL. Além de automatizar a geração das cópias, realizei um teste de restauração em um banco local separado para verificar se os dados poderiam ser recuperados.
+Durante a construção do Meu DinDin, trabalhei com autenticação, controle de permissões, integração com banco de dados, desenvolvimento de APIs REST e publicação de aplicações.
 
 
 
-Sobre o desenvolvimento
+O projeto também me proporcionou experiência com questões importantes do desenvolvimento de sistemas, como isolamento de dados, manutenção e recuperação de informações.
 
 
 
-Este projeto faz parte da minha evolução prática com Python e desenvolvimento web. Durante sua construção, trabalhei com autenticação, permissões, operações com banco de dados, criação de APIs e publicação de aplicações.
+\---
 
 
 
-Mais do que desenvolver as funcionalidades, o projeto também me permitiu lidar com questões importantes de um sistema em funcionamento, como isolamento de dados, manutenção e recuperação de informações.
+\## \*\*👨‍💻 Desenvolvedor\*\*
 
 
 
-Desenvolvedor
+\*\*Jonatas Balthazar Nascimento\*\*
 
 
 
-Jonatas Balthazar Nascimento
+\- \*\*GitHub:\*\* https://github.com/JohnBalth
 
+\- \*\*LinkedIn:\*\* https://www.linkedin.com/in/jonatas-balthazar-120298202
 
 
-GitHub: https://github.com/JohnBalth
 
-
-
-LinkedIn: https://www.linkedin.com/in/jonatas-balthazar-120298202
+Projeto desenvolvido como parte do meu portfólio profissional, com foco em desenvolvimento backend utilizando Python e Django.
 
